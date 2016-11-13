@@ -90,8 +90,12 @@ extension MainViewController: UITableViewDataSource {
         let formater = DateFormatter()
         formater.dateFormat = "EEEE, MMM d, yyyy"
         var createdText = ""
+        if let id = item?.id {
+            createdText += String(id) + " - "
+        }
+        
         if let createdDate = item?.created {
-            createdText = formater.string(from: createdDate)
+            createdText += formater.string(from: createdDate)
         }
         cell.createdLabel.text = createdText
         
