@@ -28,7 +28,7 @@ class MainViewController: UIViewController {
             self?.tableView.reloadData()
         }
         
-        setupLoadMore()
+        setupUI()
         getData()
     }
 
@@ -55,10 +55,14 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController {
-    func setupLoadMore() {
+    func setupUI() {
+        // Load more indicator
         let loadMoreIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         loadMoreIndicator.startAnimating()
         tableView.tableFooterView = loadMoreIndicator
+        
+        // Screen title
+        title = "Infinite Scrolling List"
     }
 }
 

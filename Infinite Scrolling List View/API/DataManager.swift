@@ -23,12 +23,12 @@ class DataManager {
     // Private data
     fileprivate let APIEndPoint = "https://hook.io/syshen/infinite-list"
     fileprivate let pageSize = 20
-    fileprivate var currentPage = 1
+    fileprivate var currentPage = 0
     
     // Fetch data from network
     func fetchMoreData(completionHandler: (([Item]) -> Void)?, errorHandler: ((Error) -> Void)?) {
-        fetchData(page: currentPage, completionHandler: { [unowned self] items in
-            self.currentPage = self.currentPage + 1
+        self.currentPage = self.currentPage + 1
+        fetchData(page: currentPage, completionHandler: { items in
             completionHandler?(items)
         }, errorHandler: errorHandler)
     }
@@ -38,6 +38,8 @@ class DataManager {
                           "num" : pageSize]
         Alamofire.request(APIEndPoint, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil)
             .responseJSON(queue: DispatchQueue.global(qos: .utility), options: .allowFragments, completionHandler: { [unowned self] response in
+                print(response.request?.url)
+                
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
@@ -57,7 +59,7 @@ class DataManager {
             realm.deleteAll()
         }
         
-        fetchData(page: 1, completionHandler: nil, errorHandler: nil)
+        fetchData(page: 0, completionHandler: nil, errorHandler: nil)
     }
 }
 
