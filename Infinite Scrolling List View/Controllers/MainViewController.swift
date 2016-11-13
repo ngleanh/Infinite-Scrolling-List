@@ -68,7 +68,7 @@ extension MainViewController {
 
 extension MainViewController {
     func getData() {
-        items = realm.objects(Item.self)
+        items = realm.objects(Item.self).sorted(byProperty: "id", ascending: true)
         tableView.reloadData()
     }
 }
